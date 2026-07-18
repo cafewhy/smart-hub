@@ -7,43 +7,85 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
+
+
     public function index()
     {
-        return response()->json(Booking::all());
+
+        return Booking::with(
+            'user',
+            'equipment'
+        )->get();
+
     }
+
+
 
     public function store(Request $request)
     {
-        $booking = Booking::create($request->all());
+
+
+        $data = $request->validate([
+
+            'user_id'=>'required',
+            'equipment_id'=>'required',
+            'borrow_date'=>'required',
+            'return_date'=>'required'
+
+        ]);
+
+
+
+        $data['status']='dipinjam';
+
+
+
+        return Booking::create($data);
+
+
+    }
+
+
+
+    public function show(Booking $booking)
+    {
+
+        return $booking->load(
+            'equipment',
+            'user'
+        );
+
+    }
+
+
+
+    public function update(Request $request, Booking $booking)
+    {
+
+        $booking->update(
+            $request->all()
+        );
+
+
+        return $booking;
+
+    }
+
+
+
+    public function destroy(Booking $booking)
+    {
+
+        $booking->delete();
+
 
         return response()->json([
-            'message' => 'Booking berhasil dibuat',
-            'data' => $booking
+
+            'message'=>'Booking deleted'
+
         ]);
+
     }
 
-    public function show(string $id)
-    {
-        return response()->json(Booking::findOrFail($id));
-    }
 
-    public function update(Request $request, string $id)
-    {
-        $booking = Booking::findOrFail($id);
-
-        $booking->update($request->all());
-
-        return response()->json([
-            'message' => 'Booking berhasil diupdate'
-        ]);
-    }
-
-    public function destroy(string $id)
-    {
-        Booking::destroy($id);
-
-        return response()->json([
-            'message' => 'Booking berhasil dihapus'
-        ]);
-    }
 }

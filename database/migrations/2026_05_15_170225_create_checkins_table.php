@@ -4,25 +4,40 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::create('checkins', function (Blueprint $table) {
-            $table->id();
 
-            $table->foreignId('booking_id')->constrained()->onDelete('cascade');
+public function up(): void
+{
 
-            $table->dateTime('checkin_time');
+Schema::create('checkins', function(Blueprint $table){
 
-            $table->string('status');
+$table->id();
 
-            $table->timestamps();
-        });
-    }
+$table->foreignId('booking_id')
+->constrained()
+->cascadeOnDelete();
 
-    public function down(): void
-    {
-        Schema::dropIfExists('checkins');
-    }
+
+$table->dateTime('checkin_date');
+
+
+$table->timestamps();
+
+
+});
+
+
+}
+
+
+
+public function down(): void
+{
+
+Schema::dropIfExists('checkins');
+
+}
+
 };

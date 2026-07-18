@@ -11,13 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('equipments', function (Blueprint $table) {
-    $table->id();
-    $table->string('name');
-    $table->text('description');
-    $table->enum('status', ['tersedia', 'dipinjam']);
-    $table->timestamps();
-});
+        Schema::create('equipments', function (Blueprint $table) {
+
+            $table->id();
+
+            $table->string('name');
+
+            $table->text('description')->nullable();
+
+            $table->enum('status', [
+                'tersedia',
+                'dipinjam'
+            ])->default('tersedia');
+
+            $table->timestamps();
+
+        });
     }
 
     /**
@@ -25,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('equipment');
+        Schema::dropIfExists('equipments');
     }
 };

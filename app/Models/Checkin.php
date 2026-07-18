@@ -6,14 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Checkin extends Model
 {
+
     protected $fillable = [
+
         'booking_id',
-        'checkin_time',
-        'status'
+        'checkin_date'
+
     ];
+
+
 
     public function booking()
     {
         return $this->belongsTo(Booking::class);
     }
+
 }

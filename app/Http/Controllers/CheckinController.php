@@ -2,64 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Equipment;
 use App\Models\Checkin;
 use Illuminate\Http\Request;
 
 class CheckinController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        return Booking::with('equipment','user')
+            ->where('status','dipinjam')
+            ->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+
+    public function store(Request $request, $id)
     {
-        //
+
+        $booking = Booking::findOrFail($id);
+
+
+        // ubah status booking
+        $booking->update([
+            'status'=>'dikembalikan'
+        ]);
+
+
+
+        // ubah alat jadi tersedia
+        Equipment::where(
+            'id',
+            $booking->equipment_id
+        )->update([
+            'status'=>'tersedia'
+        ]);
+
+
+
+        // simpan data checkin
+        Checkin::create([
+
+            'booking_id'=>$booking->id,
+
+            'checkin_date'=>now()
+
+        ]);
+
+
+
+        return response()->json([
+
+            'message'=>'Equipment berhasil dikembalikan'
+
+        ]);
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Checkin $checkin)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Checkin $checkin)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Checkin $checkin)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Checkin $checkin)
-    {
-        //
-    }
 }

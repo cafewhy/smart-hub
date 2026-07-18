@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
 {
+
     public function index()
     {
         return response()->json(
@@ -14,49 +15,54 @@ class EquipmentController extends Controller
         );
     }
 
+
     public function store(Request $request)
     {
-        $equipment = Equipment::create([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => $request->status
+
+        $data = $request->validate([
+            'name'=>'required',
+            'description'=>'required',
+            'status'=>'required'
         ]);
 
-        return response()->json([
-            'message' => 'Data berhasil ditambahkan',
-            'data' => $equipment
-        ]);
+
+        return Equipment::create($data);
+
     }
 
-    public function show(string $id)
+
+
+    public function show(Equipment $equipment)
     {
-        return response()->json(
-            Equipment::findOrFail($id)
+        return $equipment;
+    }
+
+
+
+    public function update(Request $request, Equipment $equipment)
+    {
+
+        $equipment->update(
+            $request->all()
         );
+
+        return $equipment;
+
     }
 
-    public function update(Request $request, string $id)
-    {
-        $equipment = Equipment::findOrFail($id);
 
-        $equipment->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'status' => $request->status
-        ]);
+
+    public function destroy(Equipment $equipment)
+    {
+
+        $equipment->delete();
 
         return response()->json([
-            'message' => 'Data berhasil diupdate',
-            'data' => $equipment
+            'message'=>'Equipment deleted'
         ]);
+
     }
 
-    public function destroy(string $id)
-    {
-        Equipment::findOrFail($id)->delete();
 
-        return response()->json([
-            'message' => 'Data berhasil dihapus'
-        ]);
-    }
+
 }
