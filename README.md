@@ -1,82 +1,41 @@
-# Smart-Hub Management System
+# Smart Hub Management System
 
-Project UTS Full Stack menggunakan Laravel 13 dan MySQL untuk mengelola inventaris peralatan studio, booking, dan check-in peralatan melalui REST API.
+## Deskripsi
+Smart Hub Management System merupakan pengembangan lanjutan dari project UTS yang sebelumnya telah dibuat. Pada tahap UAS, sistem dikembangkan dengan menambahkan frontend services berbasis Laravel 13 dan Inertia JS yang terintegrasi dengan backend API.
 
----
+Aplikasi ini digunakan untuk mengelola proses peminjaman peralatan dengan fitur autentikasi, pengelolaan data equipment, transaksi booking, dan proses check-in peralatan.
 
 ## Teknologi
+
 - Laravel 13
-- MySQL
-- Laravel Sanctum
-- REST API
+- Inertia JS
+- Vue.js
+- Laravel Sanctum API
+- Supabase PostgreSQL
 - Git & GitHub
 
----
+## Fitur Utama
 
-## Fitur
-- Login API dengan token
-- CRUD Equipment
-- CRUD Booking
-- Check-in API
-- Protected API menggunakan Sanctum
+- Login Authentication
+- Manage Equipment (List, Create, Update, Delete)
+- Manage Booking (Create, Update, Delete)
+- Check-in Equipment
+- Integrasi Frontend dengan Laravel API
 
----
+## Database
 
-## Endpoint API
+Database menggunakan Supabase PostgreSQL.
 
-### Authentication
-```http
-POST /api/login
-```
+Tabel utama:
+- users
+- equipments
+- bookings
+- checkins
 
-### Equipment
-```http
-GET /api/equipments
-POST /api/equipments
-PUT /api/equipments/{id}
-DELETE /api/equipments/{id}
-```
+## Menjalankan Project
 
-### Booking
-```http
-GET /api/bookings
-POST /api/bookings
-PUT /api/bookings/{id}
-DELETE /api/bookings/{id}
-```
-
-### Check-in
-```http
-POST /api/checkin/{id}
-```
-
----
-
-## Instalasi
+Install dependency:
 
 ```bash
 composer install
-php artisan migrate
-php artisan serve
-```
-
----
-
-## Testing
-API testing dilakukan menggunakan Thunder Client.
-
----
-
-## Git Branching
-```bash
-git checkout -b feature/email-notification
-git merge feature/email-notification
-```
-## Screenshot
-
-### API Route List
-![API Route](screenshots/route-list.png)
----
-
-## Repository
-https://github.com/Aiimas-dev/smart-hub-management-system
+npm install
